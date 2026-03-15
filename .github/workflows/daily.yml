@@ -1,0 +1,28 @@
+# Tệp này cần đặt tại thư mục: .github/workflows/daily_run.yml
+name: Daily Stock Report
+
+on:
+  schedule:
+    # 08:35 UTC = 15:35 Việt Nam (Thứ 2 đến Thứ 6 hàng tuần)
+    - cron: '35 8 * * 1-5'
+  workflow_dispatch: # Cho phép nhấn nút chạy thử thủ công trên GitHub
+
+jobs:
+  run_bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Market Bot
+        run: python market_bot.py
