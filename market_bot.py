@@ -92,3 +92,27 @@ if __name__ == "__main__":
     # Kích hoạt bot
     app = StockAutomation()
     app.run()
+    name: Half-Hourly Stock Report
+
+on:
+  schedule:
+    # '*/30' nghĩa là mỗi 30 phút
+    # '2-8' giờ UTC tương ứng với 9:00 sáng đến 15:00 chiều giờ VN
+    # '1-5' là từ Thứ 2 đến Thứ 6
+    - cron: '*/30 2-8 * * 1-5'
+  workflow_dispatch: # Cho phép chạy tay bất cứ lúc nào
+
+jobs:
+  run_bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: |
+          pip install requests vnstock pandas IPython
+      - name: Run Bot
+        run: python market_bot.py
