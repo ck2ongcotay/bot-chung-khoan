@@ -4,7 +4,7 @@ name: Daily Stock Report
 on:
   schedule:
     # 08:35 UTC = 15:35 Việt Nam (Thứ 2 đến Thứ 6 hàng tuần)
-    - cron: '35 8 * * 1-5'
+    - cron: '*/30 2-8 * * 1-5'
   workflow_dispatch: # Cho phép nhấn nút chạy thử thủ công trên GitHub
 
 jobs:
